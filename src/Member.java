@@ -23,13 +23,4 @@ public class Member {
     public String getPersonnummer() {
         return personnummer;
     }
-
-    public LocalDate getLatestPayment() {
-        return latestPayment;
-    }
-
-    @Override
-    public String toString() {
-        return name + " (" + personnummer + "), senast betalt: " + latestPayment;
-    }
 }

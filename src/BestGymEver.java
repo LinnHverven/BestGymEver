@@ -8,15 +8,15 @@ import java.util.Scanner;
 
 public class BestGymEver {
 
-    private List<Member> members = new ArrayList<>();
-    private PT pt;
+    private List<Member> members = new ArrayList<>(); //Plockar in informationen som finns om medlemmarna.
+    private PT pt; //Skickar ut informationen om när medlemmarna tränar till PT:n
 
     public BestGymEver(String MemberData, String ptDataFile) {
         readMembers (MemberData);
         pt = new PT(ptDataFile);
     }
 
-    // Läser in medlemmar från filen
+    // Läser in medlemmar från filen med try-with-resources
     private void readMembers(String MemberData) {
         try (BufferedReader reader = new BufferedReader(new FileReader(MemberData))) {
             String rad;
@@ -29,17 +29,17 @@ public class BestGymEver {
                 LocalDate senasteBetalning = LocalDate.parse(datumRad);
 
                 Member member = new Member(personnummer, name, senasteBetalning);
-                members.add(member);
+                members.add(member); //Lägger till medlemmen på listan till PT:n
             }
         } catch (IOException e) {
             System.out.println("Fel vid läsning av medlemsfil: " + e.getMessage());
         }
     }
 
-    // Söker efter en medlem baserat på namn eller personnummer
-    public Member findMember (String sökterm) {
+    // Söker efter en medlem baserat på namn eller personnummer och ignorera stora och små bokstäver.
+    public Member findMember (String findmember) {
         for (Member member : members) {
-            if (member.getName().equalsIgnoreCase(sökterm) || member.getPersonnummer().equals(sökterm)) {
+            if (member.getName().equalsIgnoreCase(findmember) || member.getPersonnummer().equals(findmember)) {
                 return member;
             }
         }
